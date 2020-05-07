@@ -1,0 +1,191 @@
+<style>
+
+.article {
+    font-family: system-ui, BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;      
+    text-align: center;
+}
+
+.article__album {
+    font-weight: bold;
+}
+
+.article__assets {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: -2rem;
+}
+
+.article__city {
+    font-weight: bold;
+}
+
+.article__column {
+    flex-direction: column;
+}
+
+.article__image {
+    margin: 0 auto;
+    max-width: 100vw;
+    object-fit: cover;
+    object-position: 0 0;
+}
+
+.article__links {
+    margin: 2rem;
+    font-family: system-ui;
+    text-align: center;
+    font-size: .7rem;
+    font-weight: bold;
+    -webkit-animation:colorchange 20s infinite alternate;
+}
+
+.article__row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.article__year {
+    font-size: .7rem;
+    font-weight: bold;
+}
+
+.article__text {
+    margin-bottom: 1rem;
+}
+
+.article__title {
+    -webkit-animation:colorchange 20s infinite alternate;
+}
+
+        @-webkit-keyframes colorchange {
+            0% {
+
+                color:#ff0000;
+            }
+
+            10% {
+
+                color: #2a00ff;
+            }
+
+            20% {
+
+                color:#ff0000;
+            }
+
+            30% {
+
+                color:#b4ff69;
+            }
+
+            40% {
+
+                color: #ff0000;
+            }
+            
+            50% {
+            
+                color: #2a00ff;
+            }
+            
+            60% {
+            
+                color:#ff0000;
+            }
+            
+            70% {
+            
+                color:#b4ff69;
+            }
+            80% {
+            
+                color: #ff0000;
+            }
+            
+            90% {
+            
+                color: #2a00ff;
+            }
+            
+            100% {
+                color: #ff0000;
+            }
+        }
+
+</style>
+
+
+
+<div class="article">
+    <div class="article">
+        {% if entry.bodyCopy.one().image is defined and entry.bodyCopy.one().image | length %}
+            {% set image = entry.bodyCopy.one().image %}
+            <img src="{{ image.one().getUrl() }}" />
+        {% endif %}
+    </div>
+
+    <h1 class="article__title">
+        {% if entry.title is defined and entry.title | length %}
+            {{ entry.title }}
+        {% endif %}
+    </h1>
+
+    <div class="article__city">
+        {% if entry.bodyCopy.one().city is defined and entry.bodyCopy.one().city | length %}
+            {{ entry.bodyCopy.one().city }} 
+        {% endif %}
+    </div>
+
+    <div class="article__members">
+        {% if entry.bodyCopy.one().members is defined and entry.bodyCopy.one().members | length %}
+            {{ entry.bodyCopy.one().members }} 
+        {% endif %}
+    </div>
+
+    <div class="article__assets">
+        {% if entry.assets is defined and entry.assets | length %}
+            <img src="{{ entry.assets.one().getUrl() }}" />
+        {% endif %}
+    </div>
+
+    <div class="article__text">
+        {% if entry.text is defined and entry.text | length %}
+           {{ entry.text}}
+        {% endif %}
+    </div>
+
+    <div class="article__embed">
+        {% if entry.embed is defined %}
+            {{ entry.embed.one().embedCode | raw }}
+        {% endif %}
+    </div>
+
+{% if entry.card | length %}
+    <div class="article__card">
+        <h1 class="article__discog">
+            Discography
+        </h1>
+
+        <div class="article__row">
+            {% for card in entry.card %}
+                <div class="col-lg-3 col-md-6 col-sm-12" class="article__column">
+                    {% if card.image.one() is defined and card.image.one() | length %}
+                    <img src="{{ card.image.one().getUrl() }}" class="article__image"/> 
+                    {% endif %}
+                    <div class="article__album">{{ card.album }}</div> 
+                    <div class="article__year">{{ card.year }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+    <div class="article__links">
+        <a href="{{ entry.links.one().wiki }}" class="article__links">Wiki</a>
+        <a href="{{ entry.links.one().website }}" class="article__links">Site</a>
+        <a href="{{ entry.links.one().merch }}" class="article__links">Merch</a>
+        <a href="/" class="article__links">Home</a>
+    </div>
+</div>
+
